@@ -13,6 +13,10 @@ class User extends Authenticatable
 {
     use HasApiTokens;
 
+    protected $hidden = [
+        'password'
+    ];
+
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
