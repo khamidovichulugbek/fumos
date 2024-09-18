@@ -1,0 +1,67 @@
+version: "3.7"
+
+services:
+    app:
+        build:
+            args:
+                user: ${USER:-1000}
+                uid: ${UID:-1000}
+            context: ./
+            dockerfile: docker/php-fpm/Dockerfile
+        image: fumo-php-fpm
+        container_name: fumo-php-fpm
+        restart: unless-stopped
+        working_dir: /home/fumo/www
+        volumes:
+            - ./:/home/fumo/www
+            - ./docker/php-fpm/config/php.ini:/usr/local/etc/php/php.ini
+            - ./docker/php-fpm/config/www.conf:/usr/local/etc/php-fpm.d/www.conf
+        networks:
+            - fumo-network
+
+    webserver:
+        image: nginx:alpine
+        container_name: fumo-nginx
+        restart: unless-stopped
+        ports:
+            - ${NGINX_PORT:-80}:80
+        volumes:
+            - ./:/home/fumo/www
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d
+        networks:
+            - fumo-network
+
+    db:
+        image: postgres:latest
+        container_name: fumo-db
+        restart: unless-stopped
+        ports:
+            - ${DB_PORT:-5432}:5432
+        environment:
+            PGPASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_DATABASE}
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+        volumes:
+            - fumo-db-data:/var/lib/pgsql/data
+        networks:
+            - fumo-network
+
+    cache:
+        image: redis
+        container_name: fumo-redis
+        restart: unless-stopped
+        ports:
+            - ${REDIS_PORT:-6379}:6379
+        volumes:
+            - fumo-redis-data:/data
+        networks:
+            - fumo-network
+
+volumes:
+    fumo-redis-data:
+    fumo-db-data:
+
+networks:
+    fumo-network:
+        driver: bridge
