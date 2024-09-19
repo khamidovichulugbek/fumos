@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('uploadable_type');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('type', 100)->nullable();
+            $table->foreignId('season_id')->nullable()->constrained('seasons')->nullOnDelete();
             $table->string('path');
             $table->string('size')->default('large');
             $table->string('locale', 2)->nullable();

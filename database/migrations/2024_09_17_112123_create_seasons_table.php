@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('seasons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('watcher_id')->constrained('watchers')->cascadeOnDelete();
-            $table->unsignedBigInteger('comment_id');
-            $table->string('comment_type');
-            $table->unsignedBigInteger('parent_id')->nullable();
-            $table->text('content');
+            $table->foreignId('serial_detail_id')->constrained('serial_details')->cascadeOnDelete();
+            $table->integer('season_number');
+            $table->integer('episode_count')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('seasons');
     }
 };

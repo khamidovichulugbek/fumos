@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('media_details', function (Blueprint $table) {
+        Schema::create('serial_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('media_detail_id');
-            $table->string('media_detail_type')->nullable();
+            $table->foreignId('serial_id')->constrained('serials')->cascadeOnDelete();
             $table->date('relased_date')->nullable();
             $table->string('country')->nullable();
             $table->integer('duration')->nullable();
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('media_details');
+        Schema::dropIfExists('serial_details');
     }
 };

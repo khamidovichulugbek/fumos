@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('translations', function (Blueprint $table) {
+        Schema::create('genre_serials', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('translation_id');
-            $table->string('translation_type');
-            $table->string('locale', 2)->nullable();
-            $table->string('title');
+            $table->foreignId('serial_id')->constrained('serials')->cascadeOnDelete();
+            $table->foreignId('genre_id')->constrained('genres')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('translations');
+        Schema::dropIfExists('genre_serials');
     }
 };
