@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Dashboard\Users;
 
+use App\Enums\Users\UserStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
-class SignInFormRequest extends FormRequest
+class ListUserFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +24,9 @@ class SignInFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => ['required', 'string', 'max:50', 'min:3'],
-            'password' => ['required', 'string', 'min:8']
+            'search_query' => ['nullable','string'],
+            'role_id' => ['nullable', 'integer'],
+            'status' => ['nullable', new Enum(UserStatusEnum::class)]
         ];
     }
 }
