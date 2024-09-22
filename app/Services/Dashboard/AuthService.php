@@ -45,4 +45,15 @@ final class AuthService
             message: trans('user.singed-in')
         );
     }
+
+    public function signOut(User $user): ServiceResponseDTO
+    {
+        $user->currentAccessToken()->delete();
+
+        return $this->responseService->successfulServiceResponse(
+            [
+                'message' => trans('user.sign-out')
+            ]
+        );
+    }
 }

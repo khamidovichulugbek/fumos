@@ -28,4 +28,13 @@ class AuthController extends Controller
 
         return new JsonResponse($serviceResponse->data);
     }
+
+    public function signOut(): JsonResponse
+    {
+        $serviceResponse = $this->authService->signOut(
+            user: auth()->user()
+        );
+
+        return new JsonResponse($serviceResponse->data);
+    }
 }
