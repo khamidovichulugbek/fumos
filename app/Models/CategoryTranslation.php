@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoryTranslation extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'title',
+        'locale',
+    ];
+
 }
