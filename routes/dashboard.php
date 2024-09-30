@@ -22,5 +22,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::group(['prefix' => 'category', 'as' => 'category.', 'controller' => CategoryController::class], function () {
         Route::post('/', 'createCategory')->name('create-category');
+        Route::get('/', 'listCategories')->name('list-categories');
     });
 });
