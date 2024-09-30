@@ -83,7 +83,10 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ru',
+
+    'available_locales' => ['ru', 'uz'],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -182,7 +185,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        'Slug' => App\Facades\SlugServiceFacade::class
     ])->toArray(),
 
 ];
