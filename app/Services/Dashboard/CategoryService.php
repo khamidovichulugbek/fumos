@@ -45,4 +45,11 @@ final class CategoryService
             'category' => $category->withoutRelations(),
         ]);
     }
+
+    public function listCategories(): ServiceResponseDTO
+    {
+        $categories = Category::with('translations')->get();
+
+        return $this->responseService->successfulServiceResponse($categories);
+    }
 }
